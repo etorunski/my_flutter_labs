@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -71,13 +72,44 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+
+      bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(icon: Icon( Icons.add_call) , label:"Item 1"),
+                BottomNavigationBarItem(icon: Icon(Icons.add_a_photo), label:"Take a picture"),
+              ],
+        onTap: (whichItem){
+                if(whichItem == 0)//Phone call was buttonClicked(){
+                  {
+
+                }
+                else if(whichItem == 1)//camera was clicked
+                  {
+
+                  }
+
+        }, //int parameter
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+
+      drawer:Drawer( child:
+          Column(children: [
+            ElevatedButton(onPressed: (){} , child: Text("Button 1")) ,
+            ElevatedButton(onPressed: (){} , child: Image.asset("images/Algonquin.jpg", height: 50, width: 50)) ,
+            ElevatedButton(onPressed: (){} , child: Text("Button 3"))],)
+        ),
+
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+
+        title: Text("CST2335 page"),
+        actions: [
+          ElevatedButton(onPressed: (){} , child: Text("Button 1")) ,
+          ElevatedButton(onPressed: (){} , child: Image.asset("images/Algonquin.jpg", height: 50, width: 50)) ,
+          ElevatedButton(onPressed: (){} , child: Text("Button 3"))
+        ],
+      ),
+      body: Center( child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
 
             ElevatedButton(onPressed: (){   }, child: Text("Button 1")),
@@ -89,8 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(onPressed: () {  }, child: Text("Button 4")),
 
           ],
-        ),
-      ),
+        ), ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
