@@ -79,38 +79,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('Welcome to CST2335',  style:TextStyle(letterSpacing: 5.0,fontSize: 30.0, color:Colors.blue ) ),
-            Text('$_counter',  style: Theme.of(context).textTheme.headlineMedium,),
 
-            Semantics(child: Image.asset("images/algonquin.jpg", width: 200,height:200),
-              label:"This is an image of Algonquin college"   ),
+            ElevatedButton(onPressed: (){   }, child: Text("Button 1")),
 
-            ElevatedButton( onPressed: () {
-              _controller.text = "You clicked the button";
+            ElevatedButton(onPressed: () {  }, child: Text("Button 2")),
 
-            },  //<-----lambda function
-                child:  Image.asset("images/algonquin.jpg", width: 200, height:200)  ),
+            ElevatedButton(onPressed: () {  }, child: Text("Button 3")),
 
-            Checkbox(value: isChecked,
-                onChanged: ( newVal ) {
-                if(newVal != null)
-                  setState(() {//update the GUI
-                    isChecked = newVal; //store the new value
-                  });
-                }),
-            Switch(value:isChecked,
-              onChanged: (newVal){
-                  if(newVal!= null)
-                    setState(() {
-                      isChecked = newVal;
-                    });
-              }),
-            TextField(controller: _controller,
-                decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: "First name"
-                )),
+            ElevatedButton(onPressed: () {  }, child: Text("Button 4")),
+
           ],
         ),
       ),
