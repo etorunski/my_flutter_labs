@@ -108,16 +108,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Center(
-        child: Stack(
+        child:
+        Padding(padding: EdgeInsets.all(90),
+        child:
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start, //to the left of the page
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("One-pan skillet cookie", style: TextStyle(fontSize:40, color:Colors.orange),),
+            Padding(child: Text("INGREDIENTS", style: TextStyle(fontSize: 20),),
+             padding: EdgeInsets.fromLTRB(0, 0, 0, 30)),
 
-      alignment: AlignmentDirectional.bottomEnd,
-
-          children: <Widget>[
-          Image.asset("images/Algonquin.jpg"), //bottom most
-            Text("This is Algonquin college", style: TextStyle(fontSize: 60, backgroundColor: Colors.white),) //above the image
-
+             Row(children: [ Icon(Icons.add_circle) , Text("1 stick unsalted butter") ],),
+            Row(children: [ Icon(Icons.add_circle), Text("1C granulated sugar")  ])
           ],
-        ), ),
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
