@@ -107,18 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(onPressed: (){} , child: Text("Button 3"))
         ],
       ),
-      body: Center( child: Column(
+      body: Center(
+        child: Stack(
 
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      alignment: AlignmentDirectional.bottomEnd,
+
           children: <Widget>[
-
-            ElevatedButton(onPressed: (){   }, child: Text("Button 1")),
-
-            ElevatedButton(onPressed: () {  }, child: Text("Button 2")),
-
-            ElevatedButton(onPressed: () {  }, child: Text("Button 3")),
-
-            ElevatedButton(onPressed: () {  }, child: Text("Button 4")),
+          Image.asset("images/Algonquin.jpg"), //bottom most
+            Text("This is Algonquin college", style: TextStyle(fontSize: 60, backgroundColor: Colors.white),) //above the image
 
           ],
         ), ),
