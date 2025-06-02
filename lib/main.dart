@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
 
@@ -51,21 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() { //similar to onloaded=
     super.initState();
-//show snackbar right away: page hasn't finished loading yet:
 
-    Future.delayed(Duration.zero, () {//timer to wait for the page to finish loading:
-      //code to run later
-
-//     creates
-      var snackBar = SnackBar( content: Text('Yay! A SnackBar!'),
-        duration: Duration(seconds: 5),
-        action: SnackBarAction(label: 'CLick me now!', onPressed: (){
-
-        }),
-      );
-      //shows the snackbar
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }  );
+    getSharedPreferences();
 
     _controller = TextEditingController(); //making _controller
   }
@@ -109,7 +97,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     title:  Text("Question?"),
                     content: Text("Do you want to save this?"),
                     actions: [
-                      ElevatedButton(onPressed: (){  Navigator.pop(ctx);    }, child: Text('Yes') ),
+                      ElevatedButton(onPressed: (){
+                        SharedPreferences.getInstance().then( (data){
+                          data.setString("UserInput", _controller.value.text ); //save what the user typed to disk under the name "UserInput"
+
+                        });
+
+                        Navigator.pop(ctx);    }, child: Text('Yes') ),
+
                       FilledButton(onPressed: (){ Navigator.pop(ctx);    }, child: Text('No')),
                       OutlinedButton(onPressed: () { Navigator.pop(ctx);    }, child: Text('Later'))
                       
@@ -151,6 +146,27 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+
+  void getSharedPreferences() async // this function has a thread in it
+  {
+    // await wait until this finishes:
+    var data = await SharedPreferences.getInstance(); //return the SharedPreferences that are loaded (could be many images)
+
+    var str = data.getString("UserInput"); //return null if the UserInput is not there
+    if(str != null) //found it!
+    {
+      //get your page ready with the data on disk
+      _controller.text = str;
+    }
+
+
+    //this does not need async:
+    SharedPreferences.getInstance().then( (data) {
+      //the preferences have arrived
+         // _controller.text = data.//
+    } );
   }
 
   void setNewValue(double value)
