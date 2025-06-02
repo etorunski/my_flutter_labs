@@ -1,3 +1,4 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -98,14 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     content: Text("Do you want to save this?"),
                     actions: [
                       ElevatedButton(onPressed: (){
-                        SharedPreferences.getInstance().then( (data){
-                          data.setString("UserInput", _controller.value.text ); //save what the user typed to disk under the name "UserInput"
 
-                        });
+                        //loads the encrypted data table
+                        EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+                        prefs.setString("UserInput", _controller.value.text);  //encrypt and save the data, strings only!
+
 
                         Navigator.pop(ctx);    }, child: Text('Yes') ),
 
-                      FilledButton(onPressed: (){ Navigator.pop(ctx);    }, child: Text('No')),
+                      FilledButton(onPressed: (){
+                        EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+
+                        prefs.clear();//remove the data
+
+                        Navigator.pop(ctx);    }, child: Text('No')),
                       OutlinedButton(onPressed: () { Navigator.pop(ctx);    }, child: Text('Later'))
                       
                     ],
@@ -151,22 +158,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getSharedPreferences() async // this function has a thread in it
   {
-    // await wait until this finishes:
-    var data = await SharedPreferences.getInstance(); //return the SharedPreferences that are loaded (could be many images)
+   //write this:
+    EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+    var str = await prefs.getString("UserInput"); //returns a Future<String>, not string
 
-    var str = data.getString("UserInput"); //return null if the UserInput is not there
-    if(str != null) //found it!
-    {
-      //get your page ready with the data on disk
-      _controller.text = str;
-    }
+      if(str != null)
+        {
+          _controller.text = str;
+        }
 
 
-    //this does not need async:
-    SharedPreferences.getInstance().then( (data) {
-      //the preferences have arrived
-         // _controller.text = data.//
-    } );
+      //Or you can write:, does not need async function
+    prefs.getString("UserInput").then( (str) {   if(str != null) {  _controller.text = str; }   });
   }
 
   void setNewValue(double value)
