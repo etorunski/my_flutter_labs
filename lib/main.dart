@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('Welcome to CST2335',  style:TextStyle(letterSpacing: 5.0,fontSize: 30.0, color:Colors.blue ) ),
+            const Text('welcome to week 4',  style:TextStyle(letterSpacing: 5.0,fontSize: 30.0, color:Colors.blue ) ),
             Text('$_counter',  style: Theme.of(context).textTheme.headlineMedium,),
 
             Semantics(child: Image.asset("images/algonquin.jpg", width: 200,height:200),
