@@ -51,6 +51,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() { //similar to onloaded=
     super.initState();
+//show snackbar right away: page hasn't finished loading yet:
+
+    Future.delayed(Duration.zero, () {//timer to wait for the page to finish loading:
+      //code to run later
+
+//     creates
+      var snackBar = SnackBar( content: Text('Yay! A SnackBar!'),
+        duration: Duration(seconds: 5),
+        action: SnackBarAction(label: 'CLick me now!', onPressed: (){
+
+        }),
+      );
+      //shows the snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }  );
 
     _controller = TextEditingController(); //making _controller
   }
@@ -86,7 +101,23 @@ class _MyHomePageState extends State<MyHomePage> {
               label:"This is an image of Algonquin college"   ),
 
             ElevatedButton( onPressed: () {
-              _controller.text = "You clicked the button";
+
+                showDialog(context: context,
+                    builder:(BuildContext ctx) {
+
+                  return AlertDialog(
+                    title:  Text("Question?"),
+                    content: Text("Do you want to save this?"),
+                    actions: [
+                      ElevatedButton(onPressed: (){  Navigator.pop(ctx);    }, child: Text('Yes') ),
+                      FilledButton(onPressed: (){ Navigator.pop(ctx);    }, child: Text('No')),
+                      OutlinedButton(onPressed: () { Navigator.pop(ctx);    }, child: Text('Later'))
+                      
+                    ],
+
+                  );
+                    }
+                );
 
             },  //<-----lambda function
                 child:  Image.asset("images/algonquin.jpg", width: 200, height:200)  ),
