@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'OtherPage.dart';
+
+import 'DataRepository.dart';
 
 void main() {
 
@@ -8,26 +11,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  /*
-  String  getString( {  int a = 0, double b=0.0, bool c = false }){
-
-    return "hello world";
-
-  }*/
-
   @override
   Widget build(BuildContext context) {
 
-
-
-    return MaterialApp(
+    return MaterialApp(  //constuctor for your entire application
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData( colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),),
+//      home:  OtherPage( ), //remove this for Named Routes
+      initialRoute: '/', //default load the '/' route
+      routes:  {
+        '/'           :  (context) =>   MyHomePage(title:'Title')  ,
+        '/secondPage' : (context) => OtherPage()
+      } //  {  } is a map
     );
   }
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -86,7 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
               label:"This is an image of Algonquin college"   ),
 
             ElevatedButton( onPressed: () {
-              _controller.text = "You clicked the button";
+
+
+              DataRepository.loginName = _controller.value.text;
+
+              Navigator.pushNamed(context, '/secondPage');
 
             },  //<-----lambda function
                 child:  Image.asset("images/algonquin.jpg", width: 200, height:200)  ),
@@ -105,20 +107,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       isChecked = newVal;
                     });
               }),
-            TextField(controller: _controller,
+
+            Row(children:[
+          Flexible(child:    TextField(controller: _controller,
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
                     labelText: "First name"
-                )),
+                ))
+            ),
+            IconButton(onPressed: () {  }, icon: Icon(Icons.phone))
+            ]),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+
     );
   }
 
